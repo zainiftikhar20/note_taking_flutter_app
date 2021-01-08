@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:note_taking_flutter_app/DB_Helper/DB_Helper.dart';
 import 'package:note_taking_flutter_app/Models_Folder/note.dart';
+import 'package:note_taking_flutter_app/Utilities/Constants.dart';
+import 'DB_Helper.dart';
 
 // ignore: camel_case_types
 class Note_Provider with ChangeNotifier{
@@ -27,10 +28,24 @@ class Note_Provider with ChangeNotifier{
       },
     );
   }
+  Future getNotes() async {
+    final notesList = await DB_Helper.getNotesFromDB();
+    _items = notesList
+        .map(
+          (item) =>
+          Note(
+              item['id'], item['title'], item['content'], item['imagePath']),
+    )
+        .toList();
+    notifyListeners();
+  }
+  Note getNote(int id) {
+    return _items.firstWhere((note) => note.id == id, orElse: () => null);
+  }
+  Future deleteNote(int id) {
+    _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+    return DB_Helper.delete(id);
+  }
 
-
-}
-enum EditMode {
-  ADD,
-  UPDATE,
 }

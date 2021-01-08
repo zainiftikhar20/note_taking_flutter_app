@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:note_taking_flutter_app/DB_Helper/Note_Provider.dart';
 import 'package:note_taking_flutter_app/Models_Folder/note.dart';
 import 'package:note_taking_flutter_app/Utilities/Constants.dart';
+import 'package:note_taking_flutter_app/Widgets_Folder/Delete_Popup.dart';
+import 'package:provider/provider.dart';
 import 'Note_Edit_Screen.dart';
 
 // ignore: camel_case_types
@@ -14,6 +17,15 @@ class Note_View_Screen extends StatefulWidget {
 // ignore: camel_case_types
 class _Note_View_ScreenState extends State<Note_View_Screen> {
 Note selectedNote;
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  final id = ModalRoute.of(context).settings.arguments;
+  final provider = Provider.of<Note_Provider>(context);
+  if (provider.getNote(id) != null) {
+    selectedNote = provider.getNote(id);
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,4 +100,11 @@ Note selectedNote;
       ),
     );
   }
+_showDialog() {
+  showDialog(
+      context: this.context,
+      builder: (context) {
+        return Delete_PopUp(selectedNote: selectedNote);
+      });
+}
 }
