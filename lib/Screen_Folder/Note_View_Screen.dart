@@ -32,11 +32,11 @@ void didChangeDependencies() {
       backgroundColor: white,
       appBar: AppBar(
         elevation: 0.7,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xa6211f1f),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.blue,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -47,7 +47,7 @@ void didChangeDependencies() {
           IconButton(
             icon: Icon(
               Icons.delete,
-              color: Colors.black,
+              color: Colors.blue,
             ),
             onPressed: () => _showDialog(),
           ),
@@ -92,11 +92,12 @@ void didChangeDependencies() {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xa6211f1f),
         onPressed: () {
           Navigator.pushNamed(context, Note_Edit_Screen.route,
               arguments: selectedNote.id);
         },
-        child: Icon(Icons.edit),
+        child: Icon(Icons.edit, color: Colors.blue,),
       ),
     );
   }

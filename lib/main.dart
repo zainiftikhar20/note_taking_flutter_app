@@ -5,8 +5,22 @@ import 'DB_Helper/Note_Provider.dart';
 import 'Screen_Folder/Note_Edit_Screen.dart';
 import 'Screen_Folder/Note_List_Screen.dart';
 import 'Screen_Folder/Note_View_Screen.dart';
+import 'float.dart';
 void main() {
-  runApp(MyApp());
+  runApp(SplashScreen());
+}
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Splash Screen',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

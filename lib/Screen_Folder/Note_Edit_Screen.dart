@@ -28,6 +28,11 @@ class _Note_Edit_ScreenState extends State<Note_Edit_Screen> {
   bool firstTime = true;
   Note selectedNote;
   int id;
+  FloatingActionButtonLocation _fabLocation =
+      FloatingActionButtonLocation.endDocked;
+  bool _isBottomBarNotched = false;
+  bool _isFabMini = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -56,46 +61,23 @@ class _Note_Edit_ScreenState extends State<Note_Edit_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      appBar: AppBar(
+        appBar: AppBar(
         elevation: 0.7,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
+        backgroundColor: const Color(0xa6211f1f),
+    leading: IconButton(
+    onPressed: () => Navigator.of(context).pop(),
+    icon: Icon(Icons.arrow_back),
+    color: Colors.blue,
+    ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.share),
-            color: Colors.black,
-            onPressed: share,
-          ),
-          IconButton(
-            icon: Icon(Icons.photo_camera),
-            color: Colors.black,
-            onPressed: () {
-              getImage(ImageSource.camera);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.insert_photo),
-            color: Colors.black,
-            onPressed: () {
-              getImage(ImageSource.gallery);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.delete),
-            color: Colors.black,
-            onPressed: () {
-              if (id != null) {
-                _showDialog();
-              } else {
-                Navigator.pop(context);
-              }
-            },
-          )
-        ],
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xa6211f1f),
+        onPressed: () {
+          if (titleController.text.isEmpty)
+            titleController.text = 'Untitled Note';
+          saveNote();
+        },
+        child: Icon(Icons.save, color: Colors.blue,),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -177,17 +159,52 @@ class _Note_Edit_ScreenState extends State<Note_Edit_Screen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (titleController.text.isEmpty)
-            titleController.text = 'Untitled Note';
-          saveNote();
-        },
-        child: Icon(Icons.save),
+      floatingActionButtonLocation: this._fabLocation,
+      bottomNavigationBar: this._buildBottomAppBar(context),
+
+    );
+  }
+  BottomAppBar _buildBottomAppBar(BuildContext context) {
+    return BottomAppBar(
+      color: const Color(0xa6211f1f),
+      //shape: this._isBottomBarNotched ? const CircularNotchedRectangle() : null,
+      child: Row(
+        children: <Widget>[
+
+          IconButton(
+            icon: Icon(Icons.share),
+            color: Colors.blue,
+            onPressed: share,
+          ),
+          IconButton(
+            icon: Icon(Icons.photo_camera),
+            color: Colors.blue,
+            onPressed: () {
+              getImage(ImageSource.camera);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.insert_photo),
+            color: Colors.blue,
+            onPressed: () {
+              getImage(ImageSource.gallery);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            color: Colors.blue,
+            onPressed: () {
+              if (id != null) {
+                _showDialog();
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          )
+        ],
       ),
     );
   }
-
   void saveNote() {
     String title = titleController.text.trim();
     String content = contentController.text.trim();

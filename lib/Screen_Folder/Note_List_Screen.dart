@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking_flutter_app/DB_Helper/Note_Provider.dart';
 import 'package:note_taking_flutter_app/Utilities/Constants.dart';
@@ -35,15 +34,15 @@ class _Note_List_ScreenState extends State<Note_List_Screen> {
                   noteprovider.items.length <= 0
                       ? child
                       : ListView.builder(
-                    itemCount: noteprovider.items.length + 1,
-                    itemBuilder: (context, index)
-                    {
-                      if (index == 0)
-                      {
-                        return header();
-                      }
-                      else
-                      {
+                        itemCount: noteprovider.items.length + 1,
+                        itemBuilder: (context, index)
+                        {
+                          if (index == 0)
+                          {
+                            return header();
+                          }
+                          else
+                          {
                         final i = index - 1;
                         final item = noteprovider.items[i];
                         return List_Items(
@@ -58,12 +57,12 @@ class _Note_List_ScreenState extends State<Note_List_Screen> {
                   ),
                 ),
                 floatingActionButton: FloatingActionButton(
-
+                  backgroundColor: const Color(0xa6211f1f),
                   onPressed:(){
                     goToNoteEditScreen(context);
                   },
 
-                  child: Icon(Icons.add,),
+                  child: Icon(Icons.add, color: Colors.blue,),
 
                 ),
               );
