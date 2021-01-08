@@ -18,4 +18,14 @@ class DB_Helper {
     final database = await DB_Helper.database();
     return database.query("notes", orderBy: "id DESC");
   }
+
+  static Future delete(int id) async {
+    final database = await DB_Helper.database();
+    return database.delete('notes', where: 'id = ?', whereArgs: [id]);
+  }
+  static Future insert(Map<String, Object> data) async {
+    final database = await DB_Helper.database();
+    database.insert("notes", data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
 }
