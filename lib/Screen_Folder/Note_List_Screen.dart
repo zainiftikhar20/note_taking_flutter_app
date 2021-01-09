@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_taking_flutter_app/DB_Helper/Note_Provider.dart';
+import 'package:note_taking_flutter_app/Models_Folder/note.dart';
 import 'package:note_taking_flutter_app/Utilities/Constants.dart';
 import 'package:note_taking_flutter_app/Widgets_Folder/List_Items.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,11 @@ class Note_List_Screen extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Note_List_ScreenState extends State<Note_List_Screen> {
-
+  bool firstTime = true;
+  Note selectedNote;
+  int id;
+  FloatingActionButtonLocation _fabLocation =
+      FloatingActionButtonLocation.endDocked;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -72,12 +77,13 @@ class _Note_List_ScreenState extends State<Note_List_Screen> {
                   backgroundColor: const Color(0xa6211f1f),
                   onPressed: () {
                     goToNoteEditScreen(context);
-                    //Navigator.push(context, new MaterialPageRoute(builder: (context) => new Login_Page()));
                   },
 
                   child: Icon(Icons.add, color: Colors.blue,),
 
                 ),
+                floatingActionButtonLocation: this._fabLocation,
+                bottomNavigationBar: this._buildBottomAppBar(context),
               );
             }
           }
@@ -90,8 +96,8 @@ class _Note_List_ScreenState extends State<Note_List_Screen> {
   Widget header() {
     return
       Container(
+
         decoration: BoxDecoration(
-          //color: headerColor,
           borderRadius: BorderRadius.circular(56.0),
           color: const Color(0xa6211f1f),
           border: Border.all(width: 0.0, color: const Color(0xa6707070)
@@ -117,7 +123,22 @@ class _Note_List_ScreenState extends State<Note_List_Screen> {
       );
   }
 
+  BottomAppBar _buildBottomAppBar(BuildContext context) {
+    return BottomAppBar(
+      color: const Color(0xa6211f1f),
+      child: Row(
+        children: <Widget>[
 
+          IconButton(
+            icon: Icon(Icons.search),
+            color: Colors.blue,
+            onPressed: (){},
+          ),
+
+        ],
+      ),
+    );
+  }
   noNotesUI(BuildContext context) {
     return ListView(
       children: [
