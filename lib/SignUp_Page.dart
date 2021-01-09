@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking_flutter_app/Screen_Folder/Note_List_Screen.dart';
+import 'EmailAndPswdValidator.dart';
+import 'Login_Page.dart';
 import 'Utilities/Constants.dart';
 
 // ignore: camel_case_types
@@ -11,6 +15,23 @@ class SignUp_Page extends StatefulWidget {
 
 // ignore: camel_case_types
 class _SignUp_PageState extends State<SignUp_Page> {
+  String uid;
+  // ignore: non_constant_identifier_names
+  final GlobalKey<FormState> _SignUPkey=GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
+  TextEditingController Semail_Controller;
+  TextEditingController SnameController;
+  // ignore: non_constant_identifier_names
+  TextEditingController SpasswordController;
+  final auth=FirebaseAuth.instance;
+  @override
+  initState(){
+    SnameController=new TextEditingController();
+    Semail_Controller =new TextEditingController();
+    SpasswordController=new TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,79 +78,124 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 offset: Offset(0, 10)
                             )]
                         ),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(00),
-                              decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Enter Name',
-                                  hintStyle: TextStyle(color: Colors.grey),
-                                  border: InputBorder.none,
-
+                        child: Form(
+                          key: _SignUPkey,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(00),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
-                              ),
-
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(00),
-                              decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Enter Email',
-                                  hintStyle: TextStyle(color: Colors.grey),
-                                  border: InputBorder.none,
-
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(00),
-                              decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    hintText: 'Enter Password',
+                                child: TextFormField(
+                                  validator: nameValidator,
+                                  controller: SnameController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Name',
                                     hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none
+                                    border: InputBorder.none,
+
+                                  ),
+                                ),
+
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(00),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  validator: emailValidator,
+                                  controller: Semail_Controller,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Email',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(00),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  controller: SpasswordController,
+                                  validator: pwdValidator,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                      hintText: 'Enter Password',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 20,),
                       Row(
                         children: [
                           Expanded(
-                            child: FlatButton(
-                              onPressed: (){
-                                Navigator.push(context, new MaterialPageRoute(builder: (context) => new Note_List_Screen()));
+                              child: GestureDetector(
+                                onTap: (){
+                                  {
+                                    if (_SignUPkey.currentState.validate()) {
 
-                              },
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.blue,
-                                ),
-                                child: Center(
-                                  child: Text("Login", style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+
+                                      FirebaseAuth.instance.
+                                      createUserWithEmailAndPassword(email: Semail_Controller.text, password: SpasswordController.text)
+                                          .then((currentUser) => FirebaseFirestore.instance.collection("NotesTakingApp").doc(uid)
+                                          .set(
+                                          {
+                                            "name":SnameController.text,
+                                            "email":Semail_Controller.text,
+                                            "pswd":SpasswordController.text,
+
+                                          }).then((result) => Navigator.push
+                                        (context, MaterialPageRoute(builder: (context)=>Login_Page()),
+                                      ),)
+
+                                      );
+                                    }
+                                    else{
+                                      showDialog(context: context,builder: (BuildContext context){
+                                        return AlertDialog(
+                                            title: Text("Error"),
+                                            content: Text("Please Enter data"),
+                                            actions: <Widget>[
+                                              FlatButton(
+                                                child: Text("Close"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              )
+                                            ]
+                                        );
+                                      });
+                                    }
+                                  };
+                                },
+                                child: Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.blue,
+                                  ),
+                                  child: Center(
+                                    child: Text("Login", style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+                                  ),
                                 ),
                               ),
-                            ),
+
 
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
 

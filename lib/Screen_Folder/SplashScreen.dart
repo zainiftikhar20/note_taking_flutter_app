@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../Login_Page.dart';
 import '../main.dart';
 
 
@@ -18,7 +19,7 @@ class _SplashState extends State<Splash> {
             () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MaterialApp(
             title: 'Notes App',
-            home: MyApp(),
+            home: Login_Page(),
             theme: ThemeData(
                 primarySwatch: Colors.green)))));
   }
@@ -34,7 +35,7 @@ class _SplashState extends State<Splash> {
           SizedBox(
             height: 10,
           ),
-          Text("FA17-BSE-043", style: TextStyle(fontSize: 20,color: Color(0xFF000000))),
+          Text("FA17-BSE-032", style: TextStyle(fontSize: 20,color: Color(0xFF000000))),
           SizedBox(
             height: 10,
           ),

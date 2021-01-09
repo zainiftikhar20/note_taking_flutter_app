@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,9 @@ import 'Screen_Folder/Note_Edit_Screen.dart';
 import 'Screen_Folder/Note_List_Screen.dart';
 import 'Screen_Folder/Note_View_Screen.dart';
 import 'Screen_Folder/SplashScreen.dart';
-void main() {
+void main() async  {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(SplashScreen());
 }
 class SplashScreen extends StatelessWidget {

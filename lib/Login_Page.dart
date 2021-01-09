@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking_flutter_app/Screen_Folder/Note_List_Screen.dart';
 import 'package:note_taking_flutter_app/SignUp_Page.dart';
+import 'package:note_taking_flutter_app/main.dart';
+import 'EmailAndPswdValidator.dart';
 import 'Utilities/Constants.dart';
 
 // ignore: camel_case_types
@@ -12,7 +16,21 @@ class Login_Page extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Login_PageState extends State<Login_Page> {
+  String uid;
+  // ignore: non_constant_identifier_names
+  final GlobalKey<FormState> _Login=GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
+  TextEditingController Lemail_Controller;
+
+  // ignore: non_constant_identifier_names
+  TextEditingController LpasswordController;
+  final auth=FirebaseAuth.instance;
   @override
+  initState(){
+    Lemail_Controller =new TextEditingController();
+    LpasswordController=new TextEditingController();
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -58,38 +76,46 @@ class _Login_PageState extends State<Login_Page> {
                                 offset: Offset(0, 10)
                             )]
                         ),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(00),
-                              decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    hintText: 'Enter Email',
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none,
-
+                        child: Form(
+                          key: _Login,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(00),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: 'Enter Email',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none,
 
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(00),
-                              decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                  ),
+                                  validator: emailValidator,
+                                  controller: Lemail_Controller,
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+
                               ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    hintText: 'Enter Password',
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none
+                              Container(
+                                padding: EdgeInsets.all(00),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: 'Enter Password',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
+                                  validator: pwdValidator,
+                                  controller: LpasswordController,
+                                  obscureText: true,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
 
@@ -100,8 +126,34 @@ class _Login_PageState extends State<Login_Page> {
                           Expanded(
                             child: FlatButton(
                               onPressed: (){
-                                Navigator.push(context, new MaterialPageRoute(builder: (context) => new Note_List_Screen()));
-
+                                if(_Login.currentState.validate()){
+                                  FirebaseAuth.instance.signInWithEmailAndPassword(email: Lemail_Controller.text, password: LpasswordController.text)
+                                      .then((currentUser) => FirebaseFirestore.instance.collection("NotesTakingApp")
+                                      .doc(uid).get()
+                                      .then((result) => Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context)=>MyApp()),
+                                  ),));
+                                }
+                                else{
+                                  showDialog(context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Error"),
+                                        content: Text("Please Enter data"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text("Close"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Container(
                                 height: 50,
