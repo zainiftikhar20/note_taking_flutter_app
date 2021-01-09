@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking_flutter_app/Screen_Folder/Note_List_Screen.dart';
-import 'package:note_taking_flutter_app/SignUp_Page.dart';
 import 'Utilities/Constants.dart';
 
 // ignore: camel_case_types
-class Login_Page extends StatefulWidget {
+class SignUp_Page extends StatefulWidget {
   @override
-  _Login_PageState createState() => _Login_PageState();
+  _SignUp_PageState createState() => _SignUp_PageState();
 }
 
 // ignore: camel_case_types
-class _Login_PageState extends State<Login_Page> {
+class _SignUp_PageState extends State<SignUp_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +32,7 @@ class _Login_PageState extends State<Login_Page> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Login',
+                    'Signup',
                     style: headerNotesStyle,
                   ),
                 ],
@@ -46,7 +45,7 @@ class _Login_PageState extends State<Login_Page> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      SizedBox(height: 50,),
+                      SizedBox(height: 20,),
                       Container(
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -67,9 +66,24 @@ class _Login_PageState extends State<Login_Page> {
                               ),
                               child: TextField(
                                 decoration: InputDecoration(
-                                    hintText: 'Enter Email',
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none,
+                                  hintText: 'Enter Name',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: InputBorder.none,
+
+                                ),
+                              ),
+
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(00),
+                              decoration: BoxDecoration(
+                                  border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                              ),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: 'Enter Email',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: InputBorder.none,
 
                                 ),
                                 keyboardType: TextInputType.emailAddress,
@@ -92,9 +106,7 @@ class _Login_PageState extends State<Login_Page> {
                           ],
                         ),
                       ),
-
-
-                      SizedBox(height: 30,),
+                      SizedBox(height: 20,),
                       Row(
                         children: [
                           Expanded(
@@ -116,28 +128,6 @@ class _Login_PageState extends State<Login_Page> {
                             ),
 
                           ),
-
-                          SizedBox(width: 30,),
-                          Expanded(
-                            child: FlatButton(
-                              onPressed: (){
-                                Navigator.push(context, new MaterialPageRoute(builder: (context) => new SignUp_Page()));
-
-                              },
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: const Color(0xa6211f1f),
-                                ),
-                                child: Center(
-                                  child: Text("Signup", style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
-                                ),
-                              ),
-                            ),
-
-                          )
-
                         ],
                       )
                     ],
