@@ -24,4 +24,4 @@ samples, guidance on mobile development, and a full API reference.
 ![SplasScreen_2](https://user-images.githubusercontent.com/71585418/104103079-0242d700-52c2-11eb-99b6-ea4a7ab6c213.jpeg)
 ![AppIcon_1](https://user-images.githubusercontent.com/71585418/104103081-02db6d80-52c2-11eb-9180-10430ffaa14c.jpeg)
 ![DeleteAlert_8](https://user-images.githubusercontent.com/71585418/104103082-03740400-52c2-11eb-9650-ab106cbacc01.jpeg)
-https://user-images.githubusercontent.com/71585418/104104120-fb1ec780-52c7-11eb-9195-1aa959ed0b0f.mp4
+![Demo Notes App](https://user-images.githubusercontent.com/71585418/104104239-b182ac80-52c8-11eb-96c7-18ba4df7403e.gif)
