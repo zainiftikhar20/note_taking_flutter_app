@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import 'Note_Edit_Screen.dart';
 
 // ignore: camel_case_types
-
-
 class Note_List_Screen extends StatefulWidget {
   @override
   _Note_List_ScreenState createState() => _Note_List_ScreenState();
