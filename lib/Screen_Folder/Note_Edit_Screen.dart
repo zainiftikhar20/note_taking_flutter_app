@@ -165,7 +165,6 @@ class _Note_Edit_ScreenState extends State<Note_Edit_Screen> {
   BottomAppBar _buildBottomAppBar(BuildContext context) {
     return BottomAppBar(
       color: const Color(0xa6211f1f),
-      //shape: this._isBottomBarNotched ? const CircularNotchedRectangle() : null,
       child: Row(
         children: <Widget>[
 
@@ -173,6 +172,26 @@ class _Note_Edit_ScreenState extends State<Note_Edit_Screen> {
             icon: Icon(Icons.share),
             color: Colors.blue,
             onPressed: share,
+          ),
+          IconButton(
+            icon: Icon(Icons.alarm),
+            color: Colors.blue,
+            onPressed: () {
+              final DateTime now = DateTime.now();
+              showTimePicker(
+                context: context,
+                initialTime: TimeOfDay(hour: now.hour, minute: now.minute),
+              ).then((TimeOfDay value) {
+                if (value != null) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(value.format(context)),
+                      action: SnackBarAction(label: 'OK', onPressed: () {}),
+                    ),
+                  );
+                }
+              });
+            },
           ),
           IconButton(
             icon: Icon(Icons.photo_camera),

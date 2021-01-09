@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'EmailAndPswdValidator.dart';
+import '../Validators/EmailAndPswdValidator.dart';
 import 'Login_Page.dart';
-import 'Utilities/Constants.dart';
+import '../Utilities/Constants.dart';
 
 // ignore: camel_case_types
 class SignUp_Page extends StatefulWidget {

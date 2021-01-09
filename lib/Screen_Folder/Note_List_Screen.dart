@@ -3,7 +3,6 @@ import 'package:note_taking_flutter_app/DB_Helper/Note_Provider.dart';
 import 'package:note_taking_flutter_app/Utilities/Constants.dart';
 import 'package:note_taking_flutter_app/Widgets_Folder/List_Items.dart';
 import 'package:provider/provider.dart';
-import '../Login_Page.dart';
 import 'Note_Edit_Screen.dart';
 
 // ignore: camel_case_types

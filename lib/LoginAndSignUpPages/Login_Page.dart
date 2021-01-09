@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:note_taking_flutter_app/SignUp_Page.dart';
+import 'file:///C:/Users/zaini/AndroidStudioProjects/note_taking_flutter_app/lib/LoginAndSignUpPages/SignUp_Page.dart';
 import 'package:note_taking_flutter_app/main.dart';
-import 'EmailAndPswdValidator.dart';
-import 'Utilities/Constants.dart';
+import '../Validators/EmailAndPswdValidator.dart';
+import '../Utilities/Constants.dart';
 
 // ignore: camel_case_types
 class Login_Page extends StatefulWidget {
