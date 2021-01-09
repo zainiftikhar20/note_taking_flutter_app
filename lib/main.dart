@@ -5,7 +5,7 @@ import 'DB_Helper/Note_Provider.dart';
 import 'Screen_Folder/Note_Edit_Screen.dart';
 import 'Screen_Folder/Note_List_Screen.dart';
 import 'Screen_Folder/Note_View_Screen.dart';
-import 'float.dart';
+import 'Screen_Folder/SplashScreen.dart';
 void main() {
   runApp(SplashScreen());
 }
@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(),
+      home: Splash(),
       debugShowCheckedModeBanner: false,
     );
   }

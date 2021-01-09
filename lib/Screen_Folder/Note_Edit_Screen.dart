@@ -30,8 +30,6 @@ class _Note_Edit_ScreenState extends State<Note_Edit_Screen> {
   int id;
   FloatingActionButtonLocation _fabLocation =
       FloatingActionButtonLocation.endDocked;
-  // bool _isBottomBarNotched = false;
-  // bool _isFabMini = false;
 
   @override
   void didChangeDependencies() {

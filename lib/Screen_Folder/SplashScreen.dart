@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'main.dart';
+import '../main.dart';
 
 
 
-class MyHomePage extends StatefulWidget {
+class Splash extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SplashState createState() => _SplashState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
