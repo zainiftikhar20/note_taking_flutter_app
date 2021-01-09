@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:note_taking_flutter_app/Screen_Folder/Note_List_Screen.dart';
 import 'package:note_taking_flutter_app/SignUp_Page.dart';
 import 'package:note_taking_flutter_app/main.dart';
 import 'EmailAndPswdValidator.dart';

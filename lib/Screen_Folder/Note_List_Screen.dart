@@ -72,8 +72,8 @@ class _Note_List_ScreenState extends State<Note_List_Screen> {
                 floatingActionButton: FloatingActionButton(
                   backgroundColor: const Color(0xa6211f1f),
                   onPressed: () {
-                    //goToNoteEditScreen(context);
-                    Navigator.push(context, new MaterialPageRoute(builder: (context) => new Login_Page()));
+                    goToNoteEditScreen(context);
+                    //Navigator.push(context, new MaterialPageRoute(builder: (context) => new Login_Page()));
                   },
 
                   child: Icon(Icons.add, color: Colors.blue,),

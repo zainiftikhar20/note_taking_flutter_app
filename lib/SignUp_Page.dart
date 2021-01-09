@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:note_taking_flutter_app/Screen_Folder/Note_List_Screen.dart';
 import 'EmailAndPswdValidator.dart';
 import 'Login_Page.dart';
 import 'Utilities/Constants.dart';
@@ -20,6 +19,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
   final GlobalKey<FormState> _SignUPkey=GlobalKey<FormState>();
   // ignore: non_constant_identifier_names
   TextEditingController Semail_Controller;
+  // ignore: non_constant_identifier_names
   TextEditingController SnameController;
   // ignore: non_constant_identifier_names
   TextEditingController SpasswordController;
@@ -90,6 +90,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 child: TextFormField(
                                   validator: nameValidator,
                                   controller: SnameController,
+
                                   decoration: InputDecoration(
                                     hintText: 'Enter Name',
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -107,13 +108,13 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 child: TextFormField(
                                   validator: emailValidator,
                                   controller: Semail_Controller,
+                                  keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
                                     hintText: 'Enter Email',
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none,
 
                                   ),
-                                  keyboardType: TextInputType.emailAddress,
                                 ),
 
                               ),
@@ -145,40 +146,49 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 onTap: (){
                                   {
                                     if (_SignUPkey.currentState.validate()) {
-
-
                                       FirebaseAuth.instance.
-                                      createUserWithEmailAndPassword(email: Semail_Controller.text, password: SpasswordController.text)
-                                          .then((currentUser) => FirebaseFirestore.instance.collection("NotesTakingApp").doc(uid)
-                                          .set(
-                                          {
-                                            "name":SnameController.text,
-                                            "email":Semail_Controller.text,
-                                            "pswd":SpasswordController.text,
+                                      createUserWithEmailAndPassword(
+                                          email: Semail_Controller.text,
+                                          password: SpasswordController.text)
+                                          .then((currentUser) =>
+                                          FirebaseFirestore.instance.collection(
+                                              "NotesTakingApp").doc(uid)
+                                              .set(
+                                              {
+                                                "name": SnameController.text,
+                                                "email": Semail_Controller.text,
+                                                "pswd": SpasswordController
+                                                    .text,
 
-                                          }).then((result) => Navigator.push
-                                        (context, MaterialPageRoute(builder: (context)=>Login_Page()),
-                                      ),)
+                                              }).then((result) =>
+                                              Navigator.push
+                                                (context, MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Login_Page()),
+                                              ),)
 
                                       );
                                     }
-                                    else{
-                                      showDialog(context: context,builder: (BuildContext context){
-                                        return AlertDialog(
-                                            title: Text("Error"),
-                                            content: Text("Please Enter data"),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text("Close"),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              )
-                                            ]
-                                        );
-                                      });
+                                    else {
+                                      showDialog(context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: Text("Error"),
+                                                content: Text(
+                                                    "Please Enter data"),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text("Close"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  )
+                                                ]
+                                            );
+                                          });
                                     }
-                                  };
+                                  }
                                 },
                                 child: Container(
                                   height: 50,
